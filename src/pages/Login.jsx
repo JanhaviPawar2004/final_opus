@@ -53,89 +53,100 @@ function Login() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-cover bg-center">
-      <div className="flex w-[900px] h-[620px] bg-white shadow-2xl overflow-hidden">
-        <div className="w-1/2 relative">
-          <img
-            src={loginImage}
-            alt="login"
-            className="w-full h-full object-cover"
-          />
+    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#020c1b]">
+      
+      {/* Glass Card */}
+      <div className="w-[420px] backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8 transition-all duration-300 hover:shadow-blue-900/40">
+        
+        {/* Icon */}
+        <div className="flex justify-center text-4xl text-white mb-4">
+          <FaUser />
         </div>
-
-        <div className="w-1/2 flex items-center justify-center">
-          <div className="w-4/5">
-            <div className="flex justify-center text-4xl text-gray-500 mb-4">
-              <FaUser />
-            </div>
-
-            <h2 className="text-5xl text-blue-400 text-center mb-3 font-sacramento">
-              Welcome Back
-            </h2>
-            <p className="text-center text-gray-500 mb-8">
-              Enter your credentials to access your account
-            </p>
-
-            <form onSubmit={handleLogin}>
-              <label className="text-sm">
-                Email <span className="text-red-500">*</span>
-              </label>
+  
+        {/* Heading */}
+        <h2 className="text-4xl text-white text-center tracking-wide font-sacramento">
+          Welcome Back
+        </h2>
+  
+        <p className="text-center text-gray-300 mb-6 text-sm">
+          Sign in to continue
+        </p>
+  
+        {/* Form */}
+        <form onSubmit={handleLogin} className="space-y-4">
+  
+          {/* Email */}
+          <div>
+            <label className="text-sm text-gray-300">
+              Email
+            </label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full mt-1 px-4 py-3 rounded-lg bg-white/10 border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+  
+          {/* Password */}
+          <div>
+            <label className="text-sm text-gray-300">
+              Password
+            </label>
+  
+            <div className="relative mt-1">
               <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full border p-3 rounded mb-4"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+                className="w-full px-4 py-3 pr-10 rounded-lg bg-white/10 border border-gray-400 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
-
-              <label className="text-sm">
-                Password <span className="text-red-500">*</span>
-              </label>
-              <div className="relative mb-2">
-                <input
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Enter password"
-                  className="w-full border p-3 pr-10 rounded"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <span
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-                  onClick={() => setShowPassword(!showPassword)}
-                >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
-                </span>
-              </div>
-
-              <button
-                type="submit"
-                disabled={loading}
-                className={`w-full p-3 rounded text-white transition ${
-                  loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-400 hover:bg-blue-500"
-                }`}
+  
+              <span
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-300 hover:text-white transition"
+                onClick={() => setShowPassword(!showPassword)}
               >
-                {loading ? "Logging in..." : "Login"}
-              </button>
-            </form>
-
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
+          </div>
+  
+          {/* Forgot Password */}
+          <div className="text-right">
             <p
-              className="text-sm text-blue-500 cursor-pointer mb-4"
+              className="text-sm text-blue-300 cursor-pointer hover:underline transition"
               onClick={() => navigate("/forgot-password")}
             >
               Forgot Password?
             </p>
-
-            <p className="text-center mt-6 text-sm">
-              Don’t have an account?
-              <span
-                className="text-blue-500 cursor-pointer ml-1"
-                onClick={() => navigate("/register")}
-              >
-                Register
-              </span>
-            </p>
           </div>
-        </div>
+  
+          {/* Button */}
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 rounded-lg font-medium tracking-wide transition-all duration-300 ${
+              loading
+                ? "bg-gray-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600 hover:scale-[1.02] active:scale-[0.98]"
+            } text-white shadow-lg`}
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+  
+        {/* Register */}
+        <p className="text-center text-gray-300 text-sm mt-6">
+          Don’t have an account?
+          <span
+            className="text-blue-400 ml-1 cursor-pointer hover:underline"
+            onClick={() => navigate("/register")}
+          >
+            Register
+          </span>
+        </p>
       </div>
     </div>
   );

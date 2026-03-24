@@ -1,0 +1,254 @@
+/* authStyles.css — import this in both Login.jsx and Register.jsx */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+.auth-root, .auth-root * {
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+  color: #fff;
+}
+
+.auth-root input:-webkit-autofill,
+.auth-root input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #0d0d1f inset !important;
+  -webkit-text-fill-color: #fff !important;
+  caret-color: #fff;
+}
+
+/* ── Wrapper ── */
+.auth-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 820px;
+  height: 500px;
+  border: 2px solid #00d4ff;
+  box-shadow: 0 0 30px #00d4ff55, 0 0 60px #00d4ff22;
+  overflow: hidden;
+}
+
+/* ── Morphing shapes ── */
+.bg-shape {
+  position: absolute; right: 0; top: -5px;
+  height: 130%; width: 110%;
+  background: linear-gradient(45deg, #0d0d1f, #00d4ff);
+  transform: rotate(10deg) skewY(40deg);
+  transform-origin: bottom right;
+  transition: transform 1.5s cubic-bezier(.77, 0, .175, 1);
+  transition-delay: 1.6s;
+  pointer-events: none; z-index: 0;
+}
+.auth-wrapper.toggled .bg-shape {
+  transform: rotate(0deg) skewY(0deg);
+  transition-delay: 0.5s;
+}
+
+.secondary-shape {
+  position: absolute; left: 250px; top: 100%;
+  height: 700px; width: 850px;
+  background: #0d0d1f;
+  border-top: 3px solid #00d4ff;
+  transform: rotate(0deg) skewY(0deg);
+  transform-origin: bottom left;
+  transition: transform 1.5s cubic-bezier(.77, 0, .175, 1);
+  transition-delay: 0.5s;
+  pointer-events: none; z-index: 0;
+}
+.auth-wrapper.toggled .secondary-shape {
+  transform: rotate(-11deg) skewY(-41deg);
+  transition-delay: 1.2s;
+}
+
+/* ── Panels ── */
+.credentials-panel {
+  position: absolute; top: 0;
+  width: 50%; height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+  z-index: 2;
+}
+.credentials-panel.signin { left: 0; padding: 0 44px; }
+.credentials-panel.signup { right: 0; padding: 0 44px; }
+
+/* ── Welcome sections ── */
+.welcome-section {
+  position: absolute; top: 0;
+  width: 50%; height: 100%;
+  display: flex; flex-direction: column; justify-content: center;
+  z-index: 2; pointer-events: none;
+}
+.welcome-section.signin {
+  right: 0;
+  text-align: right;
+  padding: 0 44px 60px 120px;
+}
+.welcome-section.signup {
+  left: 0;
+  text-align: left;
+  padding: 0 120px 60px 44px;
+}
+
+/* ── signin panel slides ── */
+.credentials-panel.signin .slide-el {
+  transform: translateX(0%); opacity: 1;
+  transition: transform 0.7s ease, opacity 0.7s ease;
+}
+.credentials-panel.signin .slide-el:nth-child(1) { transition-delay: 2.1s; }
+.credentials-panel.signin .slide-el:nth-child(2) { transition-delay: 2.2s; }
+.credentials-panel.signin .slide-el:nth-child(3) { transition-delay: 2.3s; }
+.credentials-panel.signin .slide-el:nth-child(4) { transition-delay: 2.4s; }
+.credentials-panel.signin .slide-el:nth-child(5) { transition-delay: 2.5s; }
+.credentials-panel.signin .slide-el:nth-child(6) { transition-delay: 2.6s; }
+
+.auth-wrapper.toggled .credentials-panel.signin .slide-el {
+  transform: translateX(-130%); opacity: 0;
+}
+.auth-wrapper.toggled .credentials-panel.signin .slide-el:nth-child(1) { transition-delay: 0.0s; }
+.auth-wrapper.toggled .credentials-panel.signin .slide-el:nth-child(2) { transition-delay: 0.1s; }
+.auth-wrapper.toggled .credentials-panel.signin .slide-el:nth-child(3) { transition-delay: 0.2s; }
+.auth-wrapper.toggled .credentials-panel.signin .slide-el:nth-child(4) { transition-delay: 0.3s; }
+.auth-wrapper.toggled .credentials-panel.signin .slide-el:nth-child(5) { transition-delay: 0.4s; }
+.auth-wrapper.toggled .credentials-panel.signin .slide-el:nth-child(6) { transition-delay: 0.5s; }
+
+/* ── signup panel slides ── */
+.credentials-panel.signup .slide-el {
+  transform: translateX(120%); opacity: 0; filter: blur(8px);
+  transition: transform 0.7s ease, opacity 0.7s ease, filter 0.7s ease;
+}
+.credentials-panel.signup .slide-el:nth-child(1) { transition-delay: 0.0s; }
+.credentials-panel.signup .slide-el:nth-child(2) { transition-delay: 0.1s; }
+.credentials-panel.signup .slide-el:nth-child(3) { transition-delay: 0.2s; }
+.credentials-panel.signup .slide-el:nth-child(4) { transition-delay: 0.3s; }
+.credentials-panel.signup .slide-el:nth-child(5) { transition-delay: 0.4s; }
+.credentials-panel.signup .slide-el:nth-child(6) { transition-delay: 0.5s; }
+.credentials-panel.signup .slide-el:nth-child(7) { transition-delay: 0.6s; }
+
+.auth-wrapper.toggled .credentials-panel.signup .slide-el {
+  transform: translateX(0%); opacity: 1; filter: blur(0);
+}
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(1) { transition-delay: 1.7s; }
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(2) { transition-delay: 1.8s; }
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(3) { transition-delay: 1.9s; }
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(4) { transition-delay: 2.0s; }
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(5) { transition-delay: 2.1s; }
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(6) { transition-delay: 2.2s; }
+.auth-wrapper.toggled .credentials-panel.signup .slide-el:nth-child(7) { transition-delay: 2.3s; }
+
+/* ── welcome signin slides ── */
+.welcome-section.signin .slide-el {
+  transform: translateX(0); opacity: 1; filter: blur(0);
+  transition: transform 0.7s ease, opacity 0.7s ease, filter 0.7s ease;
+}
+.welcome-section.signin .slide-el:nth-child(1) { transition-delay: 2.0s; }
+.welcome-section.signin .slide-el:nth-child(2) { transition-delay: 2.1s; }
+
+.auth-wrapper.toggled .welcome-section.signin .slide-el {
+  transform: translateX(130%); opacity: 0; filter: blur(8px);
+}
+.auth-wrapper.toggled .welcome-section.signin .slide-el:nth-child(1) { transition-delay: 0.0s; }
+.auth-wrapper.toggled .welcome-section.signin .slide-el:nth-child(2) { transition-delay: 0.1s; }
+
+/* ── welcome signup slides ── */
+.welcome-section.signup .slide-el {
+  transform: translateX(-120%); opacity: 0; filter: blur(8px);
+  transition: transform 0.7s ease, opacity 0.7s ease, filter 0.7s ease;
+}
+.welcome-section.signup .slide-el:nth-child(1) { transition-delay: 0.0s; }
+.welcome-section.signup .slide-el:nth-child(2) { transition-delay: 0.1s; }
+
+.auth-wrapper.toggled .welcome-section.signup .slide-el {
+  transform: translateX(0%); opacity: 1; filter: blur(0);
+}
+.auth-wrapper.toggled .welcome-section.signup .slide-el:nth-child(1) { transition-delay: 1.7s; }
+.auth-wrapper.toggled .welcome-section.signup .slide-el:nth-child(2) { transition-delay: 1.8s; }
+
+/* ── Floating label field ── */
+.float-field { position: relative; width: 100%; margin-top: 22px; height: 46px; }
+.float-field input {
+  width: 100%; height: 100%;
+  background: transparent; border: none;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  outline: none; font-size: 15px; color: #fff; font-weight: 500;
+  padding-right: 28px;
+  transition: border-color 0.4s;
+  font-family: 'Outfit', sans-serif;
+}
+.float-field input:focus,
+.float-field input:not(:placeholder-shown) { border-bottom-color: #00d4ff; }
+.float-field label {
+  position: absolute; top: 50%; left: 0;
+  transform: translateY(-50%);
+  font-size: 15px; color: rgba(255,255,255,0.5);
+  pointer-events: none;
+  transition: top 0.4s, font-size 0.4s, color 0.4s;
+}
+.float-field input:focus ~ label,
+.float-field input:not(:placeholder-shown) ~ label {
+  top: -4px; font-size: 11px; color: #00d4ff;
+}
+.float-field .f-icon {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.35); font-size: 14px;
+  transition: color 0.4s; display: flex; align-items: center;
+  pointer-events: none;
+}
+.float-field input:focus ~ .f-icon,
+.float-field input:not(:placeholder-shown) ~ .f-icon { color: #00d4ff; }
+.float-field .eye-btn {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  color: rgba(255,255,255,0.35); font-size: 14px; cursor: pointer;
+  background: none; border: none; padding: 0;
+  transition: color 0.3s; display: flex; align-items: center;
+}
+.float-field .eye-btn:hover { color: #00d4ff; }
+
+/* ── Glow button ── */
+.glow-btn {
+  position: relative; width: 100%; height: 44px; margin-top: 28px;
+  background: transparent; border: 2px solid #00d4ff; border-radius: 40px;
+  color: #fff; font-size: 15px; font-weight: 600; cursor: pointer;
+  overflow: hidden; z-index: 1; letter-spacing: 0.05em;
+  font-family: 'Outfit', sans-serif;
+  transition: box-shadow 0.3s;
+}
+.glow-btn::before {
+  content: "";
+  position: absolute; height: 300%; width: 100%;
+  background: linear-gradient(#0d0d1f, #00d4ff, #0d0d1f, #00d4ff);
+  top: -100%; left: 0; z-index: -1; transition: top 0.5s ease;
+}
+.glow-btn:hover::before { top: 0; }
+.glow-btn:hover { box-shadow: 0 0 20px #00d4ff66; }
+.glow-btn:disabled { border-color: #444; color: #444; cursor: not-allowed; }
+.glow-btn:disabled::before { display: none; }
+
+/* ── switch link ── */
+.switch-link {
+  font-size: 13px; text-align: center;
+  margin-top: 18px; color: rgba(255,255,255,0.5);
+}
+.switch-link span {
+  color: #00d4ff; cursor: pointer; font-weight: 600; margin-left: 4px;
+}
+.switch-link span:hover { text-decoration: underline; }
+
+/* ── welcome headings ── */
+.welcome-section h2 {
+  font-size: 36px; font-weight: 800;
+  text-transform: uppercase; line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+.welcome-section p {
+  font-size: 14px; color: rgba(255,255,255,0.55); margin-top: 12px;
+}
+
+/* ── Mobile ── */
+@media (max-width: 680px) {
+  .auth-wrapper { height: auto !important; min-height: 480px; }
+  .credentials-panel { width: 100% !important; position: relative !important; left: auto !important; right: auto !important; padding: 40px 24px !important; }
+  .credentials-panel.signup { display: none; }
+  .auth-wrapper.toggled .credentials-panel.signin { display: none; }
+  .auth-wrapper.toggled .credentials-panel.signup { display: flex; }
+  .credentials-panel .slide-el { transform: none !important; opacity: 1 !important; filter: none !important; transition: none !important; }
+  .welcome-section { display: none !important; }
+  .bg-shape, .secondary-shape { display: none !important; }
+  .float-field { margin-top: 18px; }
+}

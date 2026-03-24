@@ -34,64 +34,58 @@ function ForgotPassword(){
    
    };
 
- return(
-
- <div className="h-screen flex items-center justify-center">
-
-  <div className="flex w-[900px] h-[620px] bg-white shadow-2xl overflow-hidden">
-
-   {/* LEFT IMAGE */}
-
-   <div className="w-1/2">
-    <img
-     src={loginImage}
-     alt="forgot"
-     className="w-full h-full object-cover"
-    />
-   </div>
-
-   {/* FORM */}
-
-   <div className="w-1/2 flex items-center justify-center">
-
-    <div className="w-4/5">
-
-     <h2 className="text-5xl text-blue-400 text-center mb-3 font-sacramento">
-      Forgot Password
-     </h2>
-
-     <p className="text-center text-gray-500 mb-8">
-      Enter your email to receive OTP
-     </p>
-
-     <form onSubmit={handleSubmit}>
-
-      <label>Email</label>
-
-      <input
-       type="email"
-       placeholder="Enter your email"
-       className="w-full border p-3 rounded mb-6"
-       value={email}
-       onChange={(e)=>setEmail(e.target.value)}
-      />
-
-      <button className="w-full bg-blue-400 text-white p-3 rounded hover:bg-blue-500">
-       Send OTP
-      </button>
-
-     </form>
-
+   return (
+    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#020c1b]">
+  
+      {/* Glass Card */}
+      <div className="w-[420px] backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8 transition-all duration-300 hover:shadow-blue-900/40">
+  
+        {/* Heading */}
+        <h2 className="text-4xl text-white text-center tracking-wide font-sacramento">
+          Forgot Password
+        </h2>
+  
+        <p className="text-center text-gray-300 mb-6 text-sm">
+          Enter your email to receive OTP
+        </p>
+  
+        {/* Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+  
+          {/* Email */}
+          <div>
+            <label className="text-sm text-gray-300">Email</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-full mt-1 px-4 py-3 rounded-lg bg-white/10 border border-gray-400 text-white placeholder-gray-400 
+              focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+  
+          {/* Button */}
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg font-medium tracking-wide transition-all duration-300 
+            bg-blue-500 hover:bg-blue-600 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg"
+          >
+            Send OTP
+          </button>
+          <p
+  className="text-center text-sm text-blue-400 mt-4 cursor-pointer hover:underline"
+  onClick={() => navigate("/login")}
+>
+  Back to Login
+</p>
+        </form>
+  
+      </div>
     </div>
-
-   </div>
-
-  </div>
-
- </div>
-
- );
+  );
 
 }
 
 export default ForgotPassword;
+

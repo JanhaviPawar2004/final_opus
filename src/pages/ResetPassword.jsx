@@ -1,117 +1,147 @@
 import { useState } from "react";
-import { useLocation,useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import API from "../services/api";
 import toast from "react-hot-toast";
-import loginImage from "../assets/loginImage.png";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-function ResetPassword(){
+function ResetPassword() {
 
- const location = useLocation();
- const navigate = useNavigate();
+  const location = useLocation();
+  const navigate = useNavigate();
 
- const email = location.state?.email;
+  const email = location.state?.email;
 
- const [otp,setOtp] = useState("");
- const [newPassword,setNewPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
- const handleSubmit = async(e)=>{
-  e.preventDefault();
+  // 🔥 Password strength logic
+  const getPasswordStrength = (password) => {
+    if (password.length < 6) return "Weak";
+    if (/^(?=.*[A-Z])(?=.*\d).{6,}$/.test(password)) return "Strong";
+    return "Medium";
+  };
 
-  if(!otp || !newPassword){
-   toast.error("Please fill all fields");
-   return;
-  }
+  const strength = getPasswordStrength(newPassword);
 
-  try{
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-   await API.post("/users/reset-password",{
-    email,
-    otp,
-    newPassword
-   });
+    if (!otp || !newPassword) {
+      toast.error("Please fill all fields");
+      return;
+    }
 
-   toast.success("Password reset successful");
+    // ✅ SAME VALIDATION AS REGISTER
+    if (!/^(?=.*[A-Z])(?=.*\d).{6,}$/.test(newPassword)) {
+      toast.error("Password must be 6+ chars, include 1 uppercase & 1 number");
+      return;
+    }
 
-   navigate("/login");
+    try {
 
-  }catch(err){
+      await API.post("/users/reset-password", {
+        email,
+        otp,
+        newPassword
+      });
 
-    toast.error(err.response?.data?.message || "Invalid OTP");
-  }
+      toast.success("Password reset successful");
+      navigate("/login");
 
- };
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Invalid OTP");
+    }
+  };
 
- return(
+  return (
+    <div className="h-screen flex items-center justify-center bg-gradient-to-br from-[#0a192f] via-[#112240] to-[#020c1b]">
 
- <div className="h-screen flex items-center justify-center">
+      {/* Glass Card */}
+      <div className="w-[420px] backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-8 transition-all duration-300 hover:shadow-blue-900/40">
 
-  <div className="flex w-[900px] h-[620px] bg-white shadow-2xl overflow-hidden">
+        <h2 className="text-4xl text-white text-center tracking-wide font-sacramento">
+          Reset Password
+        </h2>
 
-   {/* LEFT IMAGE */}
+        <p className="text-center text-gray-300 mb-6 text-sm">
+          Enter OTP and new password
+        </p>
 
-   <div className="w-1/2">
-    <img
-     src={loginImage}
-     alt="reset"
-     className="w-full h-full object-cover"
-    />
-   </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
 
-   {/* FORM */}
+          {/* OTP */}
+          <div>
+            <label className="text-sm text-gray-300">OTP</label>
+            <input
+              type="text"
+              placeholder="Enter OTP"
+              className="w-full mt-1 px-4 py-3 rounded-lg bg-white/10 border border-gray-400 text-white placeholder-gray-400 
+              focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+            />
+          </div>
 
-   <div className="w-1/2 flex items-center justify-center">
+          {/* New Password */}
+          <div>
+            <label className="text-sm text-gray-300">New Password</label>
 
-    <div className="w-4/5">
+            <div className="relative mt-1">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter new password"
+                className="w-full px-4 py-3 pr-10 rounded-lg bg-white/10 border border-gray-400 text-white placeholder-gray-400 
+                focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-300"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
 
-     <h2 className="text-5xl text-blue-400 text-center mb-3 font-sacramento">
-      Reset Password
-     </h2>
+              <span
+                className="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-300 hover:text-white"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </span>
+            </div>
 
-     <p className="text-center text-gray-500 mb-6">
-      Enter OTP and new password
-     </p>
+            {/* 🔥 Strength Indicator */}
+            {newPassword && (
+              <p
+                className={`text-xs mt-2 ${
+                  strength === "Strong"
+                    ? "text-green-400"
+                    : strength === "Medium"
+                    ? "text-yellow-400"
+                    : "text-red-400"
+                }`}
+              >
+                Strength: {strength}
+              </p>
+            )}
 
-     <form onSubmit={handleSubmit}>
+            <p className="text-xs text-gray-400 mt-1">
+              Must be 6+ chars, include 1 uppercase & 1 number
+            </p>
+          </div>
 
-      <label>OTP</label>
+          <p className="text-xs text-gray-400">
+            OTP is valid for 5 minutes.
+          </p>
 
-      <input
-       type="text"
-       placeholder="Enter OTP"
-       className="w-full border p-3 rounded mb-4"
-       value={otp}
-       onChange={(e)=>setOtp(e.target.value)}
-      />
+          {/* Button */}
+          <button
+            type="submit"
+            className="w-full py-3 rounded-lg font-medium tracking-wide transition-all duration-300 
+            bg-blue-500 hover:bg-blue-600 hover:scale-[1.02] active:scale-[0.98] text-white shadow-lg"
+          >
+            Reset Password
+          </button>
+        </form>
 
-      <label>New Password</label>
-
-      <input
-       type="password"
-       placeholder="Enter new password"
-       className="w-full border p-3 rounded mb-6"
-       value={newPassword}
-       onChange={(e)=>setNewPassword(e.target.value)}
-      />
-
-      <button className="w-full bg-blue-400 text-white p-3 rounded hover:bg-blue-500">
-       Reset Password
-      </button>
-
-      <p className="text-sm text-gray-500 mb-3">
-OTP is valid for 5 minutes.
-</p>
-     </form>
-
+      </div>
     </div>
-
-   </div>
-
-  </div>
-
- </div>
-
- );
-
+  );
 }
 
 export default ResetPassword;
